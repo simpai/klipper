@@ -48,7 +48,8 @@ class VirtualSD:
         try:
             filenames = os.listdir(self.sdcard_dirname)
             return [(fname, os.path.getsize(os.path.join(dname, fname)))
-                    for fname in filenames]
+                    for fname in filenames
+                    if not fname.startswith('.')]
         except:
             logging.exception("virtual_sdcard get_file_list")
             raise self.gcode.error("Unable to get file list")
@@ -57,6 +58,8 @@ class VirtualSD:
         if self.work_timer is not None and self.file_size:
             progress = float(self.file_position) / self.file_size
         return {'progress': progress}
+    def is_active(self):
+        return self.work_timer is not None
     # G-Code commands
     def cmd_error(self, params):
         raise self.gcode.error("SD write not supported")
@@ -123,7 +126,7 @@ class VirtualSD:
         self.file_position = pos
     def cmd_M27(self, params):
         # Report SD print status
-        if self.current_file is None or self.work_timer is None:
+        if self.current_file is None:
             self.gcode.respond("Not SD printing.")
             return
         self.gcode.respond("SD printing byte %d/%d" % (
