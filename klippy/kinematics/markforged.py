@@ -80,6 +80,12 @@ class MarkforgedKinematics:
     def home(self, homing_state):
         # Each axis is homed independently and in order
         for axis in homing_state.get_axes():
+# use homing override instea
+#            # force home y first 
+#            if axis == 0 and 0 in homing_state.get_axes() and 1 in homing_state.get_axes():
+#                axis = 1
+#            if axis == 1 and 0 in homing_state.get_axes() and 1 in homing_state.get_axes():
+#                axis = 0 
             if axis == self.dual_carriage_axis:
                 dc1, dc2 = self.dual_carriage_rails
                 altc = self.rails[axis] == dc2
@@ -97,7 +103,6 @@ class MarkforgedKinematics:
         for rail in self.dual_carriage_rails:
             rail.motor_enable(print_time, 0)
         self.need_motor_enable = True
-        #TODO continue
     def _check_motor_enable(self, print_time, move):
         if move.axes_d[0] or move.axes_d[1]:
             self.rails[0].motor_enable(print_time, 1)
