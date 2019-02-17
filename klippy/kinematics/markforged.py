@@ -80,7 +80,7 @@ class MarkforgedKinematics:
     def home(self, homing_state):
         # Each axis is homed independently and in order
         for axis in homing_state.get_axes():
-# use homing override instea
+# use homing override instead
 #            # force home y first 
 #            if axis == 0 and 0 in homing_state.get_axes() and 1 in homing_state.get_axes():
 #                axis = 1
