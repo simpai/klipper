@@ -17,7 +17,7 @@ class MarkforgedKinematics:
 #        self.rails[1].add_to_endstop(self.rails[1].get_endstops()[0][0])
 #        self.rails[2].add_to_endstop(self.rails[0].get_endstops()[0][0])
         self.rails[0].setup_itersolve('markforged_stepper_alloc', 'a')
-        self.rails[1].setup_itersolve('markforfed_stepper_alloc', 'b')
+        self.rails[1].setup_itersolve('markforged_stepper_alloc', 'b')
         self.rails[2].setup_itersolve('cartesian_stepper_alloc', 'z')
         # Setup boundary checks
         max_velocity, max_accel = toolhead.get_max_velocity()
